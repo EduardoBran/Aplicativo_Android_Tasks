@@ -2,4 +2,14 @@
     <string name="app_name">TasksFirebase</string>
 
     <string name="cont_image_log">Logo</string>
+
+    <!-- Tela Login -->
+    <string name="text_email">E-mail</string>
+    <string name="hint_email">Digite seu e-mail</string>
+    <string name="text_password">Senha</string>
+    <string name="hint_password">Digite sua senha</string>
+    <string name="text_btn_login">LOGIN</string>
+    <string name="text_create_account">Criar conta</string>
+    <string name="text_recover_account">Recuperar conta</string>
+
 </resources>
