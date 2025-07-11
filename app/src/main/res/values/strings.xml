@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TasksFirebase</string>
+
+    <string name="cont_image_log">Logo</string>
 </resources>
