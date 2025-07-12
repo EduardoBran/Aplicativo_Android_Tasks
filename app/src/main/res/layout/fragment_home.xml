@@ -27,6 +27,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabIndicatorColor="@color/white"
+                app:tabTextAppearance="@style/CustomTabLayout"
                 app:tabTextColor="@color/white" />
 
             <ImageButton
@@ -46,8 +47,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/black"
-            android:alpha="0.12"/>
+            android:alpha="0.12"
+            android:background="@android:color/black" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -58,14 +59,14 @@
 
 </LinearLayout>
 
-<!--
+    <!--
 
-- O ViewPager2 é um componente de paginação que permite ao usuário deslizar (swipe) entre
-  “páginas” de conteúdo — geralmente Fragments ou Views — de forma fluida,
-   na horizontal (padrão) ou vertical.
+    - O ViewPager2 é um componente de paginação que permite ao usuário deslizar (swipe) entre
+      “páginas” de conteúdo — geralmente Fragments ou Views — de forma fluida,
+       na horizontal (padrão) ou vertical.
 
- - Em resumo, o ViewPager2 é o container de páginas que, junto com o TabLayout, fornece aquela
-   interface clássica de abas — você desliza para a esquerda/direita (ou para cima/baixo) para
-   trocar o conteúdo exibido em cada aba.
+     - Em resumo, o ViewPager2 é o container de páginas que, junto com o TabLayout, fornece aquela
+       interface clássica de abas — você desliza para a esquerda/direita (ou para cima/baixo) para
+       trocar o conteúdo exibido em cada aba.
 
--->
+    -->
