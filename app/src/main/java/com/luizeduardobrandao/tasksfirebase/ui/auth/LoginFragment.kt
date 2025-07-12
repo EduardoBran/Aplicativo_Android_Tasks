@@ -36,6 +36,12 @@ class LoginFragment : Fragment() {
 
     // Listeners
     private fun initListeners(){
+
+        // Navegação temporária para acessar HomeFragment ao clicar no botão Login
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        }
+
         binding.btnRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
