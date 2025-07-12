@@ -12,4 +12,7 @@
     <string name="text_create_account">Criar conta</string>
     <string name="text_recover_account">Recuperar conta</string>
 
+    <!-- Tela Register -->
+    <string name="text_btn_create_account">CRIAR CONTA</string>
+
 </resources>
