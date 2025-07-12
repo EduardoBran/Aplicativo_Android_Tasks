@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- * NÃO SERÁ USADA.
+  ( não é preciso mais um Fragment separado só para splash — o sistema já cuida da exibição
+    inicial da sua logo de forma consistente e seguindo as guidelines de Material You e exibe
+    o ícone escolhido do aplicativo automaticamente ) -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"

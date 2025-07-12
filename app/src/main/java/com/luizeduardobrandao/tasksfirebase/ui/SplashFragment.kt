@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentSplashBinding
 
+// * Não sera usada!
+
 class SplashFragment : Fragment() {
 
     private var _binding: FragmentSplashBinding? = null
