@@ -26,4 +26,11 @@
     <string name="status_task_doing">Fazendo</string>
     <string name="status_task_done">Feitas</string>
 
+
+    <!-- Tela Formulário Incluir Nova Tarefa -->
+    <string name="text_description_form">Descrição</string>
+    <string name="hint_description_form">Criar nova descrição</string>
+    <string name="text_status_form">Status</string>
+    <string name="text_btn_save_form">Salvar</string>
+
 </resources>

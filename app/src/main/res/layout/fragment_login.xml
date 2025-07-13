@@ -91,6 +91,7 @@
 
         <!-- Inicia como visibility GONE (tools torna visível apenas aqui) -->
         <ProgressBar
+            android:id="@+id/progressBarLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
