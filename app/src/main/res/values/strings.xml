@@ -27,6 +27,9 @@
     <string name="status_task_done">Feitas</string>
 
 
+    <!-- Tela T0do -->
+    <string name="cont_floating">Adicionar Tarefa</string>
+
     <!-- Tela Formulário Incluir Nova Tarefa -->
     <string name="text_description_form">Descrição</string>
     <string name="hint_description_form">Criar nova descrição</string>
