@@ -56,7 +56,7 @@ class RegisterFragment : Fragment() {
         // 1) valida e-mail
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             // e-mail vazio ou inválido
-            showBottomSheet(message = R.string.text_login_email_error)
+            showBottomSheet(message = getString(R.string.text_login_email_error))
             binding.editTextEmail.text?.clear()
             return false
         }
@@ -64,7 +64,7 @@ class RegisterFragment : Fragment() {
         // 2) valida senha
         if (password.isEmpty() || password.length < 6) {
             // senha vazia ou muito curta
-            showBottomSheet(message = R.string.text_login_password_error)
+            showBottomSheet(message = getString(R.string.text_login_password_error))
             binding.editTextPassword.text?.clear()
             return false
         }

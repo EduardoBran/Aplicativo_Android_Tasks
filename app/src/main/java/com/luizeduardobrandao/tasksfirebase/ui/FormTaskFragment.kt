@@ -51,7 +51,7 @@ class FormTaskFragment : Fragment() {
         val description = binding.editTextDescription.text.toString().trim()
 
         if (description.isEmpty()){
-            showBottomSheet(message = R.string.text_form_task_error)
+            showBottomSheet(message = getString(R.string.text_form_task_error))
             binding.editTextDescription.text?.clear()
             return false
         }

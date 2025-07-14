@@ -52,7 +52,7 @@ class RecoverAccountFragment : Fragment() {
         // 1) valida e-mail
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             // e-mail vazio ou inválido
-            showBottomSheet(message = R.string.text_login_email_error)
+            showBottomSheet(message = getString(R.string.text_login_email_error))
             binding.editTextEmail.text?.clear()
             return false
         }
