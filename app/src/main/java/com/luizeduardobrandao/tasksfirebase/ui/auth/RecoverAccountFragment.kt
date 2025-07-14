@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentRecoverAccountBinding
 import com.luizeduardobrandao.tasksfirebase.util.initToolbar
+import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
 class RecoverAccountFragment : Fragment() {
 
@@ -51,11 +52,7 @@ class RecoverAccountFragment : Fragment() {
         // 1) valida e-mail
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             // e-mail vazio ou inválido
-            Toast.makeText(
-                requireContext(),
-                R.string.text_login_email_error,
-                Toast.LENGTH_SHORT
-            ).show()
+            showBottomSheet(message = R.string.text_login_email_error)
             binding.editTextEmail.text?.clear()
             return false
         }

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentFormTaskBinding
 import com.luizeduardobrandao.tasksfirebase.util.initToolbar
+import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
 // Incluir uma nova tarefa
 
@@ -50,11 +51,7 @@ class FormTaskFragment : Fragment() {
         val description = binding.editTextDescription.text.toString().trim()
 
         if (description.isEmpty()){
-            Toast.makeText(
-                requireContext(),
-                R.string.text_form_task_error,
-                Toast.LENGTH_SHORT
-            ).show()
+            showBottomSheet(message = R.string.text_form_task_error)
             binding.editTextDescription.text?.clear()
             return false
         }

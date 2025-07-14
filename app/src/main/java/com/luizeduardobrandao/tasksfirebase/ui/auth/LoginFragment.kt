@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentLoginBinding
+import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
 class LoginFragment : Fragment() {
 
@@ -63,11 +64,7 @@ class LoginFragment : Fragment() {
         // 1) valida e-mail
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             // e-mail vazio ou inválido
-            Toast.makeText(
-                requireContext(),
-                R.string.text_login_email_error,
-                Toast.LENGTH_SHORT
-            ).show()
+            showBottomSheet(message = R.string.text_login_email_error)
             binding.editTextEmail.text?.clear()
             return false
         }
@@ -75,11 +72,7 @@ class LoginFragment : Fragment() {
         // 2) valida senha
         if (password.isEmpty() || password.length < 6) {
             // senha vazia ou muito curta
-            Toast.makeText(
-                requireContext(),
-                R.string.text_login_password_error,
-                Toast.LENGTH_SHORT
-            ).show()
+            showBottomSheet(message = R.string.text_login_password_error)
             binding.editTextPassword.text?.clear()
             return false
         }
