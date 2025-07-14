@@ -32,8 +32,11 @@
     <string name="status_task_done">Feitas</string>
 
 
-    <!-- Tela T0do -->
+    <!-- Tela Home -->
     <string name="cont_floating">Nova Tarefa</string>
+    <string name="text_btn_delete">Remover</string>
+    <string name="text_btn_edit">Editar</string>
+    <string name="text_btn_details">Detalhes</string>
 
     <!-- Tela Formulário Incluir Nova Tarefa -->
     <string name="text_description_form">Descrição</string>
