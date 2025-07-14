@@ -38,7 +38,11 @@
         android:id="@+id/recoverAccountFragment"
         android:name="com.luizeduardobrandao.tasksfirebase.ui.auth.RecoverAccountFragment"
         android:label="fragment_recover_account"
-        tools:layout="@layout/fragment_recover_account" />
+        tools:layout="@layout/fragment_recover_account" >
+        <action
+            android:id="@+id/action_recoverAccountFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
@@ -54,6 +58,10 @@
         android:id="@+id/formTaskFragment"
         android:name="com.luizeduardobrandao.tasksfirebase.ui.FormTaskFragment"
         android:label="fragment_form_task"
-        tools:layout="@layout/fragment_form_task" />
+        tools:layout="@layout/fragment_form_task" >
+        <action
+            android:id="@+id/action_formTaskFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>

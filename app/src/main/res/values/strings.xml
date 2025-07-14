@@ -12,13 +12,18 @@
     <string name="text_create_account">Criar conta</string>
     <string name="text_recover_account">Recuperar conta</string>
 
+    <string name="text_login_validated">Login efetuado com sucesso!</string>
+    <string name="text_login_email_error">E-mail inválido!</string>
+    <string name="text_login_password_error">Senha deve ter ≥ 6 caracteres!</string>
+
     <!-- Tela Register -->
     <string name="text_btn_create_account">CRIAR CONTA</string>
+    <string name="text_create_validated">Conta criada com sucesso!</string>
 
     <!-- Tela Recuperar Conta -->
     <string name="text_btn_recover_account">ENVIAR</string>
     <string name="text_msg_explanation">Informe seu e-mail de cadastro para receber um link para alteração da senha.</string>
-
+    <string name="text_email_sent">Verifique seu e-mail!</string>
 
     <!-- Títulos do TabLayout -->
     <string name="cont_btn_logout">Logout</string>
@@ -35,5 +40,8 @@
     <string name="hint_description_form">Escreva sua nova tarefa</string>
     <string name="text_status_form">Status</string>
     <string name="text_btn_save_form">Salvar</string>
+
+    <string name="text_form_task_error">Escreva uma tarefa!</string>
+    <string name="text_form_task_saved">Tarefa salva!</string>
 
 </resources>

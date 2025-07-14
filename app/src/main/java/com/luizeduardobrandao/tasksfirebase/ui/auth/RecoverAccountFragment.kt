@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentRecoverAccountBinding
 import com.luizeduardobrandao.tasksfirebase.util.initToolbar
@@ -26,11 +28,40 @@ class RecoverAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbarRecover)
+        initListeners()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initListeners(){
+        binding.btnRecover.setOnClickListener {
+            if(validateData()){
+                findNavController().navigate(R.id.action_recoverAccountFragment_to_loginFragment)
+            }
+
+        }
+    }
+
+    private fun validateData(): Boolean {
+        val email = binding.editTextEmail.text.toString().trim()
+
+        // 1) valida e-mail
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            // e-mail vazio ou inválido
+            Toast.makeText(
+                requireContext(),
+                R.string.text_login_email_error,
+                Toast.LENGTH_SHORT
+            ).show()
+            binding.editTextEmail.text?.clear()
+            return false
+        }
+
+        Toast.makeText(requireContext(), R.string.text_email_sent, Toast.LENGTH_SHORT).show()
+        return true
     }
 
 }
