@@ -8,4 +8,7 @@
     <color name="blue_200">#81D4FA</color>
     <color name="blue_700">#0288D1</color>
 
+    <!-- tons de cinza para o divider -->
+    <color name="divider_gray_light">#888888</color>
+    <color name="divider_gray_dark">#667667</color>
 </resources>

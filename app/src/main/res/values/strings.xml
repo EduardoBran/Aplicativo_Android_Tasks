@@ -28,11 +28,11 @@
 
 
     <!-- Tela T0do -->
-    <string name="cont_floating">Adicionar Tarefa</string>
+    <string name="cont_floating">Nova Tarefa</string>
 
     <!-- Tela Formulário Incluir Nova Tarefa -->
     <string name="text_description_form">Descrição</string>
-    <string name="hint_description_form">Criar nova descrição</string>
+    <string name="hint_description_form">Escreva sua nova tarefa</string>
     <string name="text_status_form">Status</string>
     <string name="text_btn_save_form">Salvar</string>
 
