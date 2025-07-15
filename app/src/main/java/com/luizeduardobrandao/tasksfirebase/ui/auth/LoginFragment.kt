@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -51,14 +51,12 @@ class LoginFragment : Fragment() {
         }
     }
 
-    // Listeners
-    private fun initListeners(){
-
-        // Navegação temporária para acessar HomeFragment ao clicar no botão Login
+    private fun initListeners() {
         binding.btnLogin.setOnClickListener {
-            if (validateData()) {
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-            }
+            val email = binding.editTextEmail.text.toString().trim()
+            val password = binding.editTextPassword.text.toString().trim()
+            if (!validateData(email, password)) return@setOnClickListener
+            loginUser(email, password)
         }
 
         binding.btnRegister.setOnClickListener {
@@ -70,29 +68,49 @@ class LoginFragment : Fragment() {
         }
     }
 
-    // Validação dos campos de e-mail e senha (sem uso de MVVM)
-    private fun validateData(): Boolean{
-        val email = binding.editTextEmail.text.toString().trim()
-        val password = binding.editTextPassword.text.toString().trim()
-
-        // 1) valida e-mail
+    // Valida e-mail e senha localmente.
+    private fun validateData(email: String, password: String): Boolean {
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            // e-mail vazio ou inválido
             showBottomSheet(message = getString(R.string.text_login_email_error))
             binding.editTextEmail.text?.clear()
             return false
         }
-
-        // 2) valida senha
         if (password.isEmpty() || password.length < 6) {
-            // senha vazia ou muito curta
             showBottomSheet(message = getString(R.string.text_login_password_error))
             binding.editTextPassword.text?.clear()
             return false
         }
-
-        Toast.makeText(requireContext(), R.string.text_login_validated, Toast.LENGTH_SHORT).show()
         return true
+    }
+
+    // Realiza o login no Firebase e navega para Home em caso de sucesso.
+    private fun loginUser(email: String, password: String) {
+
+        // Exibe a progress bar
+        binding.progressBarLogin.isVisible = true
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+
+                // Esconde progress bar
+                binding.progressBarLogin.isVisible = false
+
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.text_login_validated,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    // Navega usando a action que limpa o back‑stack (definida no nav_graph)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                } else {
+                    // Mostra mensagem de erro do Firebase ou genérica
+                    val message = task.exception
+                        ?.localizedMessage
+                        ?: getString(R.string.text_generic_error)
+                    showBottomSheet(message = message)
+                }
+            }
     }
 
     override fun onDestroyView() {
