@@ -14,4 +14,5 @@
 
     <color name="color_delete">#FF4C3B</color>
     <color name="color_details">#03B8A7</color>
+    <color name="btn_back_card">#FFFF8800</color>
 </resources>

@@ -6,11 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.TodoFragment">
 
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTasks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_task" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="24dp"
         android:backgroundTint="@color/white"
         android:contentDescription="@string/cont_floating"
         android:src="@drawable/ic_add"
@@ -19,3 +30,11 @@
         app:tint="@color/color_default" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--
+
+- "tools:listitem" exibe o item_xml com os items do recycler view para visualizarmos
+         no layout
+
+-->

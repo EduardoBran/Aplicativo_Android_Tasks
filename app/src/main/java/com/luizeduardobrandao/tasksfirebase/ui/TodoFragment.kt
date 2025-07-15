@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.luizeduardobrandao.tasksfirebase.R
+import com.luizeduardobrandao.tasksfirebase.data.model.Status
+import com.luizeduardobrandao.tasksfirebase.data.model.Task
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentTodoBinding
+import com.luizeduardobrandao.tasksfirebase.ui.adapter.TaskAdapter
 
 // Exibe tarefas pendentes
 
@@ -15,6 +19,8 @@ class TodoFragment : Fragment() {
 
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var taskAdapter: TaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +35,8 @@ class TodoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initListeners()
+
+        initRecyclerView(getTasks())
     }
 
     override fun onDestroyView() {
@@ -36,9 +44,34 @@ class TodoFragment : Fragment() {
         _binding = null
     }
 
+    // Listeners
     private fun initListeners() {
+
+        // Botão Float
         binding.fabAdd.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_formTaskFragment)
         }
     }
+
+    // RecyclerView
+    private fun initRecyclerView(taskList: List<Task>){
+
+        taskAdapter = TaskAdapter(taskList)
+
+        binding.rvTasks.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvTasks.setHasFixedSize(true)
+        binding.rvTasks.adapter = taskAdapter
+    }
+
+    // Retornar a Lista de Tarefas (posteriormente será usado para recupear a lista do Firebase)
+    private fun getTasks() = listOf<Task>(
+        // Criando Lista Temporária para visualização das Tarefas
+        Task("0", "Criar nova tela do app", Status.TODO),
+        Task("1", "Validar informações na tela de login", Status.TODO),
+        Task("2", "Adicionar nova funcionalidade no app", Status.TODO),
+        Task("3", "Salvar token localmente", Status.TODO),
+        Task("4", "Criar funcionalidade de layout no app", Status.TODO),
+        Task("5", "Configurar Firebase", Status.TODO),
+        Task("6", "Posteriormente configurar o Room", Status.TODO)
+    )
 }

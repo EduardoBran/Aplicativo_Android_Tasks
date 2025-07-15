@@ -37,6 +37,8 @@
     <string name="text_btn_delete">Remover</string>
     <string name="text_btn_edit">Editar</string>
     <string name="text_btn_details">Detalhes</string>
+    <string name="cont_btn_next">Avançar</string>
+    <string name="cont_btn_back">Voltar</string>
 
     <!-- Tela Formulário Incluir Nova Tarefa -->
     <string name="text_description_form">Descrição</string>

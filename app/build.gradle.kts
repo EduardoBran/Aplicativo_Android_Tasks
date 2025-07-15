@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-parcelize") // serve para você poder empacotar objetos em Bundle/Intent
 }
 
 android {
