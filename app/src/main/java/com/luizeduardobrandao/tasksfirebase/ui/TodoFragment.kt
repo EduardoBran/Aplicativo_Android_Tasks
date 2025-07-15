@@ -59,7 +59,7 @@ class TodoFragment : Fragment() {
     // RecyclerView
     private fun initRecyclerView(){
 
-        taskAdapter = TaskAdapter() { task, option ->
+        taskAdapter = TaskAdapter { task, option ->
             optionSelected(task, option)
         }
 
