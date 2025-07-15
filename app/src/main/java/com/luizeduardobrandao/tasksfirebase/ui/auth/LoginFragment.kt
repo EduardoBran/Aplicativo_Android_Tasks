@@ -7,6 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentLoginBinding
 import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
@@ -15,6 +19,8 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,12 +34,21 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Inicialização da Autenticação do Firebase
+        auth = Firebase.auth
+
+        // Inicaliza os liteners
         initListeners()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    // Sobrescrevendo mét0d0 onStart para verificação de usuário já autenticado
+    override fun onStart() {
+        super.onStart()
+
+        // Se já houver um user logado, manda direto para Home
+        auth.currentUser?.let {
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        }
     }
 
     // Listeners
@@ -44,7 +59,6 @@ class LoginFragment : Fragment() {
             if (validateData()) {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
-
         }
 
         binding.btnRegister.setOnClickListener {
@@ -81,4 +95,8 @@ class LoginFragment : Fragment() {
         return true
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
