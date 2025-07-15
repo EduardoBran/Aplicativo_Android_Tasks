@@ -56,4 +56,8 @@
     <string name="text_bottom_sheet_warning">Atenção</string>
     <string name="text_btn_bottom_sheet">ENTENDI</string>
 
+
+    <!-- Mensagem genérica de erro -->
+    <string name="text_generic_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
+
 </resources>
