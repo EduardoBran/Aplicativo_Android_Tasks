@@ -12,13 +12,25 @@ import com.luizeduardobrandao.tasksfirebase.databinding.ItemTaskBinding
 // * @param taskList lista de objetos Task a serem renderizados
 
 class TaskAdapter(
-    private val taskList: List<Task>
+    private val taskList: List<Task>,
+    private val taskSelected: (Task, Int) -> Unit
 ): RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
 
     // ViewHolder interno que mantém referência ao binding gerado pelo layout item_task.xml
     inner class MyViewHolder(
         val binding: ItemTaskBinding
     ) : RecyclerView.ViewHolder(binding.root)
+
+
+    // FLAGS para os 5 eventos de cliques
+    companion object {
+        const val SELECT_BACK: Int = 1
+        const val SELECT_REMOVE: Int = 2
+        const val SELECT_EDIT: Int = 3
+        const val SELECT_DETAILS: Int = 4
+        const val SELECT_NEXT: Int = 5
+    }
+
 
     // Infla o layout do item e cria um ViewHolder.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -41,8 +53,13 @@ class TaskAdapter(
         // Define o texto da descrição
         holder.binding.textDescription.text = task.description
 
-        // Exibir indicadores
+        // Exibição e monitoramento de cliques dos indicadores e botões
         setIndicators(task, holder)
+
+        // Cliques botão Remover, Editar e Detalhes
+        holder.binding.btnDelete.setOnClickListener { taskSelected(task, SELECT_REMOVE) }
+        holder.binding.btnEdit.setOnClickListener { taskSelected(task, SELECT_EDIT) }
+        holder.binding.btnDetails.setOnClickListener { taskSelected(task, SELECT_DETAILS) }
     }
 
     // Função para exibição dos indicadores (seta de voltar e avançar)
@@ -50,15 +67,31 @@ class TaskAdapter(
         when (task.status){
             Status.TODO -> {
                 holder.binding.btnNext.isVisible = true
+
+                holder.binding.btnNext.setOnClickListener { taskSelected(task, SELECT_NEXT) }
+//                holder.binding.btnDelete.setOnClickListener { taskSelected(task, SELECT_REMOVE) }
+//                holder.binding.btnEdit.setOnClickListener { taskSelected(task, SELECT_EDIT) }
+//                holder.binding.btnDetails.setOnClickListener { taskSelected(task, SELECT_DETAILS) }
             }
 
             Status.DOING -> {
                 holder.binding.btnBack.isVisible = true
                 holder.binding.btnNext.isVisible = true
+
+                holder.binding.btnNext.setOnClickListener { taskSelected(task, SELECT_NEXT) }
+//                holder.binding.btnDelete.setOnClickListener { taskSelected(task, SELECT_REMOVE) }
+//                holder.binding.btnEdit.setOnClickListener { taskSelected(task, SELECT_EDIT) }
+//                holder.binding.btnDetails.setOnClickListener { taskSelected(task, SELECT_DETAILS) }
+                holder.binding.btnBack.setOnClickListener { taskSelected(task, SELECT_BACK) }
             }
 
             Status.DONE -> {
                 holder.binding.btnBack.isVisible = true
+
+                holder.binding.btnBack.setOnClickListener { taskSelected(task, SELECT_BACK) }
+//                holder.binding.btnDelete.setOnClickListener { taskSelected(task, SELECT_REMOVE) }
+//                holder.binding.btnEdit.setOnClickListener { taskSelected(task, SELECT_EDIT) }
+//                holder.binding.btnDetails.setOnClickListener { taskSelected(task, SELECT_DETAILS) }
             }
         }
     }
