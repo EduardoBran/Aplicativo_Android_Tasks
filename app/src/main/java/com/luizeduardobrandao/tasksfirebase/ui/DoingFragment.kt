@@ -34,7 +34,9 @@ class DoingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRecyclerView(getTasks())
+        initRecyclerView()
+
+        getTasks()
     }
 
     override fun onDestroyView() {
@@ -43,15 +45,21 @@ class DoingFragment : Fragment() {
     }
 
     // RecyclerView
-    private fun initRecyclerView(taskList: List<Task>){
+    private fun initRecyclerView(){
 
-        taskAdapter = TaskAdapter(taskList) { task, option ->
+        taskAdapter = TaskAdapter() { task, option ->
             optionSelected(task, option)
         }
 
-        binding.rvTasks.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvTasks.setHasFixedSize(true)
-        binding.rvTasks.adapter = taskAdapter
+        with(binding.rvTasks) {
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = taskAdapter
+        }
+
+//        binding.rvTasks.layoutManager = LinearLayoutManager(requireContext())
+//        binding.rvTasks.setHasFixedSize(true)
+//        binding.rvTasks.adapter = taskAdapter
     }
 
     // Configuração dos eventos de cliques da RecyclerView
@@ -76,14 +84,18 @@ class DoingFragment : Fragment() {
     }
 
     // Retornar a Lista de Tarefas (posteriormente será usado para recupear a lista do Firebase)
-    private fun getTasks() = listOf<Task>(
-        // Criando Lista Temporária para visualização das Tarefas
-        Task("0", "Bla bla bla", Status.DOING),
-        Task("1", "Validar informações na tela de login", Status.DOING),
-        Task("2", "Adicionar nova funcionalidade no app", Status.DOING),
-        Task("3", "Salvar token localmente", Status.DOING),
-        Task("4", "Criar funcionalidade de layout no app", Status.DOING),
-        Task("5", "Configurar Firebase", Status.DOING),
-        Task("6", "Posteriormente configurar o Room", Status.DOING)
-    )
+    private fun getTasks() {
+        val taskList = listOf(
+            // Criando Lista Temporária para visualização das Tarefas
+            Task("0", "Bla bla bla", Status.DOING),
+            Task("1", "Validar informações na tela de login", Status.DOING),
+            Task("2", "Adicionar nova funcionalidade no app", Status.DOING),
+            Task("3", "Salvar token localmente", Status.DOING),
+            Task("4", "Criar funcionalidade de layout no app", Status.DOING),
+            Task("5", "Configurar Firebase", Status.DOING),
+            Task("6", "Posteriormente configurar o Room", Status.DOING)
+        )
+
+        taskAdapter.submitList(taskList)
+    }
 }

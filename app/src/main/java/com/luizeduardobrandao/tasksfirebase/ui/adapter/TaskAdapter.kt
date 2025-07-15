@@ -3,18 +3,21 @@ package com.luizeduardobrandao.tasksfirebase.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.luizeduardobrandao.tasksfirebase.data.model.Status
 import com.luizeduardobrandao.tasksfirebase.data.model.Task
 import com.luizeduardobrandao.tasksfirebase.databinding.ItemTaskBinding
 
 // * Adapter para exibir uma lista de Task em um RecyclerView.
-// * @param taskList lista de objetos Task a serem renderizados
+// * @param taskList lista de objetos Task a serem renderizados (não é necessário com o DiffUtil)
+// * Utilizando DiffUtil para melhor performance (herda de ListAdapter)
 
 class TaskAdapter(
-    private val taskList: List<Task>,
+    // private val taskList: List<Task>,
     private val taskSelected: (Task, Int) -> Unit
-): RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
+): ListAdapter<Task, TaskAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     // ViewHolder interno que mantém referência ao binding gerado pelo layout item_task.xml
     inner class MyViewHolder(
@@ -22,13 +25,25 @@ class TaskAdapter(
     ) : RecyclerView.ViewHolder(binding.root)
 
 
-    // FLAGS para os 5 eventos de cliques
+    // FLAGS para os 5 eventos de cliques e callback para o DiffUtil
     companion object {
         const val SELECT_BACK: Int = 1
         const val SELECT_REMOVE: Int = 2
         const val SELECT_EDIT: Int = 3
         const val SELECT_DETAILS: Int = 4
         const val SELECT_NEXT: Int = 5
+
+        // Implementação do DiffUtil
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Task>() {
+            override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+
+                return oldItem.id == newItem.id && oldItem.description == newItem.description
+            }
+
+            override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+                return oldItem == newItem && oldItem.description == newItem.description
+            }
+        }
     }
 
 
@@ -41,14 +56,14 @@ class TaskAdapter(
         ))
     }
 
-    // Retorna a quantidade de itens na lista
-    override fun getItemCount() = taskList.size
+    // Retorna a quantidade de itens na lista (não precisa desta implementação com o DiffUtil)
+    // override fun getItemCount() = taskList.size
 
     // Vincula os dados da Task à view correspondente no ViewHolder.
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        // Obtém a Task na posição atual
-        val task = taskList[position]
+        // Obtém a Task na posição atual com a configuração do DiffUtil
+        val task = getItem(position)
 
         // Define o texto da descrição
         holder.binding.textDescription.text = task.description
