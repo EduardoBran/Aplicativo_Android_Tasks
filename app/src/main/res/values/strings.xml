@@ -41,6 +41,9 @@
     <string name="cont_btn_back">Voltar</string>
     <string name="text_remove">Tarefa removida!</string>
 
+    <string name="text_list_task_empty">Nenhuma tarefa cadastrada.</string>
+    <string name="text_load_list_task">Aguarde as tarefas serem carregadas.</string>
+
     <string name="text_title_dialog_confirm_logout">Deseja sair da sua conta?</string>
     <string name="text_button_dialog_confirm_logout">Confirmar</string>
     <string name="text_message_dialog_confirm_logout">Aperte em confirmar para sair da sua conta.</string>

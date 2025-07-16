@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -109,6 +110,15 @@ class TodoFragment : Fragment() {
         }
     }
 
+    // Verifica se a lista é vazia
+    private fun listEmpty(taskList: List<Task>) {
+        binding.textInfo.text = if (taskList.isEmpty()) {
+            getString(R.string.text_list_task_empty)
+        } else {
+            ""
+        }
+    }
+
     // Retornar a Lista de Tarefas do Firebase
     private fun getTasks() {
         reference
@@ -120,8 +130,18 @@ class TodoFragment : Fragment() {
                     val taskList = mutableListOf<Task>()
                     for (ds in snapshot.children) {
                         val task = ds.getValue(Task::class.java) as Task
-                        taskList.add(task)
+
+                        // verificando status antes de adicionar
+                        if (task.status == Status.TODO) {
+                            taskList.add(task)
+                        }
                     }
+
+                    // Oculta progress bar e chama função de lista vazia
+                    binding.progressBar.isVisible = false
+                    listEmpty(taskList)
+
+                    // Atualiza a Lista
                     taskAdapter.submitList(taskList)
                 }
 

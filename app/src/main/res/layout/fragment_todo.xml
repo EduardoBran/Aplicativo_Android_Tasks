@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.TodoFragment">
 
+
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTasks"
@@ -14,15 +15,45 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_task" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:indeterminateTint="@color/white" />
+
+        <TextView
+            android:id="@+id/textInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_load_list_task"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
+        style="@style/Widget.FAB.Circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        style="@style/Widget.FAB.Circle"
         android:contentDescription="@string/cont_floating"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,9 +62,9 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-<!--
+    <!--
 
-- "tools:listitem" exibe o item_xml com os items do recycler view para visualizarmos
-         no layout
+    - "tools:listitem" exibe o item_xml com os items do recycler view para visualizarmos
+             no layout
 
--->
+    -->
