@@ -8,6 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.data.model.Status
 import com.luizeduardobrandao.tasksfirebase.data.model.Task
@@ -23,6 +31,9 @@ class TodoFragment : Fragment() {
 
     private lateinit var taskAdapter: TaskAdapter
 
+    private lateinit var reference: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,8 +46,14 @@ class TodoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Inicialização da Referências ao RealtimeDatabase e Autenticação do Firebase
+        auth = Firebase.auth
+        reference = Firebase.database.reference
+
+        // Inicializa os Listeners
         initListeners()
 
+        // Inicializa Recycler View
         initRecyclerView()
 
         getTasks()
@@ -92,19 +109,28 @@ class TodoFragment : Fragment() {
         }
     }
 
-    // Retornar a Lista de Tarefas (posteriormente será usado para recupear a lista do Firebase)
+    // Retornar a Lista de Tarefas do Firebase
     private fun getTasks() {
-        val taskList = listOf(
-            // Criando Lista Temporária para visualização das Tarefas
-            Task("0", "Criar nova tela do app", Status.TODO),
-            Task("1", "Validar informações na tela de login", Status.TODO),
-            Task("2", "Adicionar nova funcionalidade no app", Status.TODO),
-            Task("3", "Salvar token localmente", Status.TODO),
-            Task("4", "Criar funcionalidade de layout no app", Status.TODO),
-            Task("5", "Configurar Firebase", Status.TODO),
-            Task("6", "Posteriormente configurar o Room", Status.TODO)
-        )
+        reference
+            .child("tasks")
+            .child(auth.currentUser?.uid.orEmpty())
+            .addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
 
-        taskAdapter.submitList(taskList)
+                    val taskList = mutableListOf<Task>()
+                    for (ds in snapshot.children) {
+                        val task = ds.getValue(Task::class.java) as Task
+                        taskList.add(task)
+                    }
+                    taskAdapter.submitList(taskList)
+                }
+
+                // Cancela a busca (aplicativo fechado ou pausado)
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(
+                        requireContext(), R.string.text_generic_error, Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 }
