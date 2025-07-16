@@ -22,6 +22,7 @@ import com.luizeduardobrandao.tasksfirebase.data.model.Status
 import com.luizeduardobrandao.tasksfirebase.data.model.Task
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentTodoBinding
 import com.luizeduardobrandao.tasksfirebase.ui.adapter.TaskAdapter
+import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
 // Exibe tarefas pendentes
 
@@ -98,12 +99,22 @@ class TodoFragment : Fragment() {
             TaskAdapter.SELECT_NEXT -> {
                 Toast.makeText(requireContext(), "Next", Toast.LENGTH_SHORT).show()
             }
+
             TaskAdapter.SELECT_REMOVE -> {
-                Toast.makeText(requireContext(), R.string.text_remove, Toast.LENGTH_SHORT).show()
+                showBottomSheet(
+                    titleDialog = R.string.text_title_dialog_confirm_remove,
+                    message = getString(R.string.text_message_dialog_confirm_remove),
+                    titleButton = R.string.text_button_dialog_confirm_logout,
+                    onClick = {
+                        deleteTask(task)
+                    }
+                )
             }
+
             TaskAdapter.SELECT_EDIT -> {
                 Toast.makeText(requireContext(), "Editando", Toast.LENGTH_SHORT).show()
             }
+
             TaskAdapter.SELECT_DETAILS -> {
                 Toast.makeText(requireContext(), "Detalhes", Toast.LENGTH_SHORT).show()
             }
@@ -141,6 +152,9 @@ class TodoFragment : Fragment() {
                     binding.progressBar.isVisible = false
                     listEmpty(taskList)
 
+                    // Ordena para nova tarefa adicionada ser a primeira da lista
+                    taskList.reverse()
+
                     // Atualiza a Lista
                     taskAdapter.submitList(taskList)
                 }
@@ -152,5 +166,24 @@ class TodoFragment : Fragment() {
                     ).show()
                 }
             })
+    }
+
+    // Deletando uma tarefa
+    private fun deleteTask(task: Task){
+        reference
+            .child("tasks")
+            .child(auth.currentUser?.uid.orEmpty())
+            .child(task.id)
+            .removeValue().addOnCompleteListener { result ->
+                if (result.isSuccessful){
+                    Toast.makeText(
+                        requireContext(), R.string.text_remove, Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(), R.string.text_generic_error, Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 }

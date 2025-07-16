@@ -49,6 +49,10 @@
     <string name="text_message_dialog_confirm_logout">Aperte em confirmar para sair da sua conta.</string>
     <string name="text_toast_confirm_logout">Usuário deslogado.</string>
 
+    <string name="text_title_dialog_confirm_remove">Deseja remover esta tarefa?</string>
+    <string name="text_message_dialog_confirm_remove">Aperte em confirmar para remover a tarefa.</string>
+    <string name="text_toast_confirm_remove">Tarefa removida!</string>
+
 
     <!-- Tela Formulário Incluir Nova Tarefa -->
     <string name="text_description_form">Descrição</string>
