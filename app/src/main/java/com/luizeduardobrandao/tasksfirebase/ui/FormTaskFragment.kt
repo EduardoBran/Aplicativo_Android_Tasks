@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -30,6 +31,9 @@ class FormTaskFragment : Fragment() {
     private var newTask: Boolean = true // verificação se está criando ou editando uma tarefa
     private var status: Status = Status.TODO
 
+    // Recuperando argumentos de TodoFragment (HomeFragment)
+    private val args: FormTaskFragmentArgs by navArgs()
+
     private lateinit var reference: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
@@ -46,11 +50,14 @@ class FormTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Configura a toolbar com título dinâmico
-        initToolbarAndTitle()
+        initToolbar(binding.toolbarForm)
 
         // Inicialização da Referências ao RealtimeDatabase e Autenticação do Firebase
         auth = Firebase.auth
         reference = Firebase.database.reference
+
+        // Recupera as informações do argumento
+        getArgs()
 
         // inicialização dos listeners
         initListeners()
@@ -61,15 +68,6 @@ class FormTaskFragment : Fragment() {
         _binding = null
     }
 
-    // Exibe e configura título da toolbar
-    private fun initToolbarAndTitle(){
-        initToolbar(binding.toolbarForm)
-        val title = if (newTask)
-            getString(R.string.text_title_toolbar_new_task)
-        else
-            getString(R.string.text_title_toolbar_edit_task)
-        binding.textTitleForm.text = title
-    }
 
     // Configuração dos Listeners
     private fun initListeners() {
@@ -86,6 +84,34 @@ class FormTaskFragment : Fragment() {
                 else -> Status.DONE
             }
         }
+    }
+
+    // Função para recuperar argumento passado
+    private fun getArgs(){
+        // ".let" só acessa a tarefa se for diferente de nulo
+        args.task.let {
+            if (it != null) {
+                this.task = it
+
+                configTask()
+            }
+        }
+    }
+
+    // Popula o FormTask com as informações recebidas
+    private fun configTask(){
+        newTask = false
+        status = task.status
+        binding.textTitleForm.setText(R.string.text_title_toolbar_edit_task)
+
+        binding.editTextDescription.setText(task.description)
+        binding.rgStatus.check(
+            when (task.status) {
+                Status.TODO -> R.id.rbTodo
+                Status.DOING -> R.id.rbDoing
+                else -> R.id.rbDone
+            }
+        )
     }
 
     // Validação dos dados da tarefa
@@ -129,8 +155,16 @@ class FormTaskFragment : Fragment() {
                 binding.progressBarForm.visibility = View.GONE
 
                 if (result.isSuccessful) {
+
+                    // escolhe a mensagem de acordo com newTask
+                    val messageRes = if (newTask){
+                        R.string.text_form_task_saved
+                    } else {
+                        R.string.text_form_task_update
+                    }
+
                     Toast.makeText(
-                        requireContext(), R.string.text_form_task_saved, Toast.LENGTH_SHORT
+                        requireContext(), messageRes, Toast.LENGTH_SHORT
                     ).show()
 
                     findNavController().navigate(R.id.action_formTaskFragment_to_homeFragment)

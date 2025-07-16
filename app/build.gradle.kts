@@ -4,6 +4,8 @@ plugins {
     id("kotlin-parcelize") // serve para você poder empacotar objetos em Bundle/Intent
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    // Safe Args (biblioteca que realiza o envio de dados entre as telas de forma segura)
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {

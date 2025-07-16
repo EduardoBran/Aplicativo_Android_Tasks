@@ -71,7 +71,9 @@ class TodoFragment : Fragment() {
 
         // Botão Float
         binding.fabAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_formTaskFragment)
+            val action = HomeFragmentDirections
+                .actionHomeFragmentToFormTaskFragment(null)
+            findNavController().navigate(action)
         }
     }
 
@@ -112,7 +114,10 @@ class TodoFragment : Fragment() {
             }
 
             TaskAdapter.SELECT_EDIT -> {
-                Toast.makeText(requireContext(), "Editando", Toast.LENGTH_SHORT).show()
+                // Envia informação do tipo Task para FormTaskFragment
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToFormTaskFragment(task)
+                findNavController().navigate(action)
             }
 
             TaskAdapter.SELECT_DETAILS -> {

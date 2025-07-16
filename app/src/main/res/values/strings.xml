@@ -62,6 +62,7 @@
 
     <string name="text_form_task_error">Escreva uma tarefa!</string>
     <string name="text_form_task_saved">Tarefa salva!</string>
+    <string name="text_form_task_update">Tarefa atualizada!</string>
 
     <string name="text_title_toolbar_new_task">Nova Tarefa</string>
     <string name="text_title_toolbar_edit_task">Editar Tarefa</string>
