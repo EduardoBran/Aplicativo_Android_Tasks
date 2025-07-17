@@ -2,7 +2,6 @@ package com.luizeduardobrandao.tasksfirebase.ui.auth
 
 import android.os.Bundle
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +13,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentRegisterBinding
+import com.luizeduardobrandao.tasksfirebase.ui.BaseFragment
 import com.luizeduardobrandao.tasksfirebase.util.FirebaseHelper
 import com.luizeduardobrandao.tasksfirebase.util.initToolbar
 import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding: FragmentRegisterBinding get() = _binding!!
@@ -78,6 +78,10 @@ class RegisterFragment : Fragment() {
             binding.editTextPassword.text?.clear()
             return false
         }
+
+        // função para esconder teclado extendida de BaseFragment
+        hideKeyboard()
+
         return true
     }
 
