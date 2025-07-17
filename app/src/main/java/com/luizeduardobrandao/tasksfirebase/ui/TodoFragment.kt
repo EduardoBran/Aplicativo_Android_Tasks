@@ -88,7 +88,8 @@ class TodoFragment : Fragment() {
     private fun optionSelected(task: Task, option: Int) {
         when (option) {
             TaskAdapter.SELECT_NEXT -> {
-                Toast.makeText(requireContext(), "Next", Toast.LENGTH_SHORT).show()
+                task.status = Status.DOING
+                updateTask(task)
             }
 
             TaskAdapter.SELECT_REMOVE -> {
@@ -160,6 +161,25 @@ class TodoFragment : Fragment() {
                     ).show()
                 }
             })
+    }
+
+    // Atualizando Status da Tarefa através do botão de seta
+    private fun updateTask(task: Task) {
+        FirebaseHelper.getDatabase()
+            .child("tasks")
+            .child(FirebaseHelper.getIdUser())
+            .child(task.id)
+            .setValue(task).addOnCompleteListener { result ->
+                if (result.isSuccessful){
+                    Toast.makeText(
+                        requireContext(), R.string.text_form_task_update, Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(), R.string.text_generic_error, Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 
     // Deletando uma tarefa
