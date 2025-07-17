@@ -8,9 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentRegisterBinding
 import com.luizeduardobrandao.tasksfirebase.ui.BaseFragment
@@ -23,7 +20,6 @@ class RegisterFragment : BaseFragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding: FragmentRegisterBinding get() = _binding!!
 
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +35,6 @@ class RegisterFragment : BaseFragment() {
 
         // Inicializa Toolbar
         initToolbar(binding.toolbarRegister)
-
-        // Inicializa Firebase Auth
-        auth = Firebase.auth
 
         // Inicializa os listeners
         initListeners()
@@ -92,7 +85,7 @@ class RegisterFragment : BaseFragment() {
         binding.progressBarRegister.isVisible = true
 
         // Realiza a criação do usuário
-        auth.createUserWithEmailAndPassword(email, password)
+        FirebaseHelper.getAuth().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 binding.progressBarRegister.isVisible = false
 

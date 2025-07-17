@@ -7,9 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentLoginBinding
 import com.luizeduardobrandao.tasksfirebase.ui.BaseFragment
@@ -20,8 +17,6 @@ class LoginFragment : BaseFragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +30,6 @@ class LoginFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inicialização da Autenticação do Firebase
-        auth = Firebase.auth
-
         // Inicaliza os liteners
         initListeners()
     }
@@ -47,7 +39,7 @@ class LoginFragment : BaseFragment() {
         super.onStart()
 
         // Se já houver um user logado, manda direto para Home
-        auth.currentUser?.let {
+        FirebaseHelper.getAuth().currentUser?.let {
             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }
     }
@@ -94,7 +86,7 @@ class LoginFragment : BaseFragment() {
         // Exibe a progress bar
         binding.progressBarLogin.isVisible = true
 
-        auth.signInWithEmailAndPassword(email, password)
+        FirebaseHelper.getAuth().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
 
                 // Esconde progress bar

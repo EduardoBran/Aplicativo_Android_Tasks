@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentRecoverAccountBinding
 import com.luizeduardobrandao.tasksfirebase.ui.BaseFragment
+import com.luizeduardobrandao.tasksfirebase.util.FirebaseHelper
 import com.luizeduardobrandao.tasksfirebase.util.initToolbar
 import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
@@ -21,7 +19,6 @@ class RecoverAccountFragment : BaseFragment() {
     private var _binding: FragmentRecoverAccountBinding? = null
     private val binding: FragmentRecoverAccountBinding get() = _binding!!
 
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +34,6 @@ class RecoverAccountFragment : BaseFragment() {
 
         // Configura a toolbar
         initToolbar(binding.toolbarRecover)
-
-        // Inicialização da Autenticação do Firebase
-        auth = Firebase.auth
 
         // Configura listeners
         initListeners()
@@ -78,7 +72,7 @@ class RecoverAccountFragment : BaseFragment() {
         // Exibe a progress bar
         binding.progressBarRecover.isVisible = true
 
-        auth.sendPasswordResetEmail(email)
+        FirebaseHelper.getAuth().sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
 
                 // Esconde progress bar
