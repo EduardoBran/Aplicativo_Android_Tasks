@@ -9,19 +9,15 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.data.model.Status
 import com.luizeduardobrandao.tasksfirebase.data.model.Task
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentTodoBinding
 import com.luizeduardobrandao.tasksfirebase.ui.adapter.TaskAdapter
+import com.luizeduardobrandao.tasksfirebase.util.FirebaseHelper
 import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
 // Exibe tarefas pendentes
@@ -32,9 +28,6 @@ class TodoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var taskAdapter: TaskAdapter
-
-    private lateinit var reference: DatabaseReference
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,10 +40,6 @@ class TodoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Inicialização da Referências ao RealtimeDatabase e Autenticação do Firebase
-        auth = Firebase.auth
-        reference = Firebase.database.reference
 
         // Inicializa os Listeners
         initListeners()
@@ -137,9 +126,9 @@ class TodoFragment : Fragment() {
 
     // Retornar a Lista de Tarefas do Firebase
     private fun getTasks() {
-        reference
+        FirebaseHelper.getDatabase()
             .child("tasks")
-            .child(auth.currentUser?.uid.orEmpty())
+            .child(FirebaseHelper.getIdUser())
             .addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -175,9 +164,9 @@ class TodoFragment : Fragment() {
 
     // Deletando uma tarefa
     private fun deleteTask(task: Task){
-        reference
+        FirebaseHelper.getDatabase()
             .child("tasks")
-            .child(auth.currentUser?.uid.orEmpty())
+            .child(FirebaseHelper.getIdUser())
             .child(task.id)
             .removeValue().addOnCompleteListener { result ->
                 if (result.isSuccessful){

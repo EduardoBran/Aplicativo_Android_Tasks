@@ -13,6 +13,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentLoginBinding
+import com.luizeduardobrandao.tasksfirebase.util.FirebaseHelper
 import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
 class LoginFragment : Fragment() {
@@ -75,7 +76,7 @@ class LoginFragment : Fragment() {
             binding.editTextEmail.text?.clear()
             return false
         }
-        if (password.isEmpty() || password.length < 6) {
+        if (password.isEmpty()) {
             showBottomSheet(message = getString(R.string.text_login_password_error))
             binding.editTextPassword.text?.clear()
             return false
@@ -105,10 +106,17 @@ class LoginFragment : Fragment() {
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
                     // Mostra mensagem de erro do Firebase ou genérica
-                    val message = task.exception
-                        ?.localizedMessage
-                        ?: getString(R.string.text_generic_error)
-                    showBottomSheet(message = message)
+//                    val message = task.exception
+//                        ?.localizedMessage
+//                        ?: getString(R.string.text_generic_error)
+//                    showBottomSheet(message = message)
+
+                    showBottomSheet(
+                        message =
+                            getString(
+                                FirebaseHelper.validError(task.exception?.message.toString())
+                            )
+                    )
                 }
             }
     }

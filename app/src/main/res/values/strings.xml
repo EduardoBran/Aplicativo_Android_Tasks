@@ -13,12 +13,13 @@
     <string name="text_recover_account">Recuperar conta</string>
 
     <string name="text_login_validated">Login efetuado com sucesso!</string>
-    <string name="text_login_email_error">E-mail inválido!</string>
-    <string name="text_login_password_error">Senha inválida!</string>
+    <string name="text_login_email_error">Insira um e-mail válido.</string>
+    <string name="text_login_password_error">Insira uma senha.</string>
 
     <!-- Tela Register -->
     <string name="text_btn_create_account">CRIAR CONTA</string>
     <string name="text_create_validated">Conta criada com sucesso!</string>
+    <string name="text_password_min_length_error">A senha deve ter no mínimo 6 caracteres.</string>
 
     <!-- Tela Recuperar Conta -->
     <string name="text_btn_recover_account">ENVIAR</string>
@@ -75,5 +76,11 @@
 
     <!-- Mensagem genérica de erro -->
     <string name="text_generic_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
+
+
+    <!-- Erros Firebase Authentication -->
+    <string name="account_invalid_login_fragment">Não foi possível fazer login. E‑mail ou senha inválidos.</string>
+    <string name="email_in_use_register_fragment">Este e-mail já está em uso.</string>
+    <string name="strong_password_register_fragment">Insira uma senha mais forte.</string>
 
 </resources>

@@ -14,6 +14,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.luizeduardobrandao.tasksfirebase.R
 import com.luizeduardobrandao.tasksfirebase.databinding.FragmentRegisterBinding
+import com.luizeduardobrandao.tasksfirebase.util.FirebaseHelper
 import com.luizeduardobrandao.tasksfirebase.util.initToolbar
 import com.luizeduardobrandao.tasksfirebase.util.showBottomSheet
 
@@ -73,7 +74,7 @@ class RegisterFragment : Fragment() {
 
         // Valida senha
         if (password.isEmpty() || password.length < 6) {
-            showBottomSheet(message = getString(R.string.text_login_password_error))
+            showBottomSheet(message = getString(R.string.text_password_min_length_error))
             binding.editTextPassword.text?.clear()
             return false
         }
@@ -100,10 +101,17 @@ class RegisterFragment : Fragment() {
                     findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
                 } else {
                     // pega mensagem de erro do Firebase e se não encontrar, exibe a minha.
-                    val message = task.exception
-                        ?.localizedMessage
-                        ?: getString(R.string.text_generic_error)
-                    showBottomSheet(message = message)
+//                    val message = task.exception
+//                        ?.localizedMessage
+//                        ?: getString(R.string.text_generic_error)
+//                    showBottomSheet(message = message)
+
+                    showBottomSheet(
+                        message =
+                            getString(
+                                FirebaseHelper.validError(task.exception?.message.toString())
+                            )
+                    )
                 }
             }
     }
